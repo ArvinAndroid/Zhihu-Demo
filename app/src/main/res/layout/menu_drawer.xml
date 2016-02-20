@@ -15,14 +15,4 @@
 
     </group>
 
-    <item android:title="Group 2">
-
-        <menu>
-
-            <item android:title="item4" />
-
-            <item android:title="item5" />
-        </menu>
-    </item>
-
 </menu>
