@@ -1,4 +1,4 @@
-package com.cn.materiadesign;
+package com.cn.materiadesign.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.cn.materiadesign.R;
 import com.cn.materiadesign.fragment.Tab1Fragment;
 import com.cn.materiadesign.fragment.Tab2Fragment;
 import com.cn.materiadesign.fragment.Tab3Fragment;
