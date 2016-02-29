@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.cn.materiadesign.Application;
+import com.cn.materiadesign.Constant;
 import com.cn.materiadesign.R;
 
 import org.json.JSONException;
@@ -27,15 +28,13 @@ public class SplashActivity extends Activity implements Response.Listener, Respo
     private ImageView img;
     private TextView title;
 
-    private String url = "http://news-at.zhihu.com/api/4/start-image/1080*1776";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_splash);
         img = (ImageView) findViewById(R.id.img);
         title = (TextView) findViewById(R.id.tv_title);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, this, this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Constant.SPLASH_URL, this, this);
         Application.getInstance().getRequestQueue().add(request);
     }
 
@@ -75,10 +74,10 @@ public class SplashActivity extends Activity implements Response.Listener, Respo
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SplashActivity.this.finish();
                 Intent intent = new Intent(SplashActivity.this,
                         MainActivity.class);
                 startActivity(intent);
+                SplashActivity.this.finish();
             }
 
         }, 2000);

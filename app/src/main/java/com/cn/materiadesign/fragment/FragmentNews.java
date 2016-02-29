@@ -14,14 +14,14 @@ import com.cn.materiadesign.R;
 /**
  * Created by jun on 2/24/16.
  */
-public class Tab1Fragment extends Fragment {
+public class FragmentNews extends Fragment {
 
     private RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab1, container, false);
+        View view = inflater.inflate(R.layout.fragment_news, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         recyclerView.setAdapter(new ContentAdapter());
         recyclerView.setHasFixedSize(true);

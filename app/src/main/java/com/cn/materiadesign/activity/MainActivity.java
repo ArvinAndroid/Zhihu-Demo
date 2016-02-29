@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cn.materiadesign.R;
-import com.cn.materiadesign.fragment.Tab1Fragment;
+import com.cn.materiadesign.fragment.FragmentNews;
 import com.cn.materiadesign.fragment.Tab2Fragment;
 import com.cn.materiadesign.fragment.Tab3Fragment;
 
@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pageer);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Tab1Fragment());
-        adapter.addFragment(new Tab2Fragment());
-        adapter.addFragment(new Tab3Fragment());
+        adapter.addFragment(new FragmentNews(), "news");
+        adapter.addFragment(new Tab2Fragment(), "two");
+        adapter.addFragment(new Tab3Fragment(), "three");
         viewPager.setAdapter(adapter);
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     class ViewPagerAdapter extends FragmentPagerAdapter {
 
         List<Fragment> fragments = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -91,11 +92,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Tab" + position + 1;
+            return titles.get(position);
         }
 
-        public void addFragment(Fragment fragment) {
+        public void addFragment(Fragment fragment, String title) {
             fragments.add(fragment);
+            titles.add(title);
         }
     }
 
