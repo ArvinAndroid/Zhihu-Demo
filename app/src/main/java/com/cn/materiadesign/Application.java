@@ -1,6 +1,7 @@
 package com.cn.materiadesign;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 /**
@@ -9,6 +10,7 @@ import com.android.volley.toolbox.Volley;
 public class Application extends android.app.Application {
 
     private RequestQueue queue;
+    private ImageLoader imageLoader;
 
     private static Application instance;
 
@@ -29,4 +31,14 @@ public class Application extends android.app.Application {
 
         return queue;
     }
+
+    public ImageLoader getImageLoader() {
+        getRequestQueue();
+        if (imageLoader == null) {
+            imageLoader = new ImageLoader(this.queue,
+                    new LruBitmapCache());
+        }
+        return this.imageLoader;
+    }
+
 }
