@@ -28,6 +28,8 @@ public class SplashActivity extends Activity implements Response.Listener, Respo
     private ImageView img;
     private TextView title;
 
+    private boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +53,14 @@ public class SplashActivity extends Activity implements Response.Listener, Respo
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                     img.setImageBitmap(response.getBitmap());
                     startMainActivity();
+                    flag = true;
                 }
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     img.setImageResource(R.mipmap.avatar);
                     startMainActivity();
+                    flag = true;
                 }
             });
         } catch (JSONException e) {
@@ -71,16 +75,17 @@ public class SplashActivity extends Activity implements Response.Listener, Respo
     }
 
     private void startMainActivity() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this,
-                        MainActivity.class);
-                startActivity(intent);
-                SplashActivity.this.finish();
-            }
+        if (!flag) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(SplashActivity.this,
+                            MainActivity.class);
+                    startActivity(intent);
+                    SplashActivity.this.finish();
+                }
 
-        }, 2000);
-
+            }, 2000);
+        }
     }
 }
