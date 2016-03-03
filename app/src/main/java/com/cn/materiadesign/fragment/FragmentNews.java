@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,6 +44,7 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Constant.LATESNEWS_URL, this, this);
         Application.getInstance().getRequestQueue().add(request);
         return view;
@@ -50,7 +52,7 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(), "加载数据失败", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "加载失败", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -88,7 +90,11 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
             Story story = items.get(position);
             holder.title.setText(story.getTitle());
             String imgUrl = story.getImages();
-            Glide.with(context).load(imgUrl.substring(2, imgUrl.length() - 2)).into(holder.image);
+            Glide.with(context)
+                    .load(imgUrl.substring(2, imgUrl.length() - 2))
+                    .placeholder(R.mipmap.paris)
+                    .error(R.mipmap.avatar)
+                    .into(holder.image);
         }
 
         @Override

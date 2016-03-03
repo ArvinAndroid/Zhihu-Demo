@@ -40,13 +40,16 @@ public class SplashActivity extends Activity implements Response.Listener, Respo
 
     @Override
     public void onResponse(Object response) {
-        flag = true;
         try {
             JSONObject obj = new JSONObject(response.toString());
             String imgUrl = obj.getString("img");
             String text = obj.getString("text");
             title.setText(text);
-            Glide.with(this).load(imgUrl).into(img);
+            Glide.with(this)
+                    .load(imgUrl)
+                    .placeholder(R.mipmap.avatar)
+                    .error(R.mipmap.avatar)
+                    .into(img);
             startActivity();
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,6 +77,7 @@ public class SplashActivity extends Activity implements Response.Listener, Respo
 
     private void startMainActivity() {
         if (!flag) {
+            flag = true;
             Intent intent = new Intent(SplashActivity.this,
                     MainActivity.class);
             startActivity(intent);

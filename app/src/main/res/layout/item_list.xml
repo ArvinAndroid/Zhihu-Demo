@@ -11,8 +11,7 @@
             android:id="@+id/card_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_image_height"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/paris" />
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/card_text"
