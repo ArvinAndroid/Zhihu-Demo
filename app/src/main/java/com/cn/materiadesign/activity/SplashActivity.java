@@ -4,20 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.cn.materiadesign.Application;
 import com.cn.materiadesign.Constant;
 import com.cn.materiadesign.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -42,50 +40,44 @@ public class SplashActivity extends Activity implements Response.Listener, Respo
 
     @Override
     public void onResponse(Object response) {
+        flag = true;
         try {
             JSONObject obj = new JSONObject(response.toString());
             String imgUrl = obj.getString("img");
             String text = obj.getString("text");
             title.setText(text);
-            ImageLoader imageLoader = Application.getInstance().getImageLoader();
-            imageLoader.get(imgUrl, new ImageLoader.ImageListener() {
-                @Override
-                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                    img.setImageBitmap(response.getBitmap());
-                    startMainActivity();
-                    flag = true;
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    img.setImageResource(R.mipmap.avatar);
-                    startMainActivity();
-                    flag = true;
-                }
-            });
-        } catch (JSONException e) {
+            Glide.with(this).load(imgUrl).into(img);
+            startActivity();
+        } catch (Exception e) {
             e.printStackTrace();
+            startMainActivity();
         }
 
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.v("cc", error.toString());
+        startMainActivity();
     }
 
-    private void startMainActivity() {
+    private void startActivity() {
         if (!flag) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(SplashActivity.this,
-                            MainActivity.class);
-                    startActivity(intent);
-                    SplashActivity.this.finish();
+                    startMainActivity();
                 }
 
             }, 2000);
+        }
+    }
+
+    private void startMainActivity() {
+        if (!flag) {
+            Intent intent = new Intent(SplashActivity.this,
+                    MainActivity.class);
+            startActivity(intent);
+            SplashActivity.this.finish();
         }
     }
 }
