@@ -5,6 +5,8 @@ package com.cn.materiadesign;
  */
 public class Constant {
 
-    public static final String SPLASH_URL = "http://news-at.zhihu.com/api/4/start-image/1080*1776";
-    public static final String LATESNEWS_URL = "http://news-at.zhihu.com/api/4/news/latest";
+    public static final String NEWS = "http://news-at.zhihu.com/api/4/";
+    public static final String SPLASH_URL = NEWS + "/start-image/1080*1776";
+    public static final String LATESNEWS_URL = NEWS + "news/latest";
+    public static final String DETAILNEWS_URL = NEWS + "news/";
 }
