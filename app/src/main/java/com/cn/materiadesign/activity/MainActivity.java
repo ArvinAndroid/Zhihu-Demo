@@ -18,7 +18,7 @@ import android.view.View;
 
 import com.cn.materiadesign.R;
 import com.cn.materiadesign.fragment.FragmentNews;
-import com.cn.materiadesign.fragment.Tab2Fragment;
+import com.cn.materiadesign.fragment.FragmentHotNews;
 import com.cn.materiadesign.fragment.Tab3Fragment;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pageer);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentNews(), "news");
-        adapter.addFragment(new Tab2Fragment(), "two");
+        adapter.addFragment(new FragmentHotNews(), "hot");
         adapter.addFragment(new Tab3Fragment(), "three");
         viewPager.setAdapter(adapter);
 

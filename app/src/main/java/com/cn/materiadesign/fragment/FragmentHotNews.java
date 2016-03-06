@@ -12,7 +12,7 @@ import com.cn.materiadesign.R;
 /**
  * Created by jun on 2/24/16.
  */
-public class Tab2Fragment extends Fragment {
+public class FragmentHotNews extends Fragment {
 
     @Nullable
     @Override

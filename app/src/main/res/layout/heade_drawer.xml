@@ -18,6 +18,6 @@
         android:layout_below="@+id/head_img"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:text="陈俊-Android Developer"
+        android:text="@string/about"
         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 </RelativeLayout>

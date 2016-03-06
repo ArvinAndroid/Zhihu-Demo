@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * Created by jun on 2/24/16.
  */
-public class FragmentNews extends Fragment implements Response.Listener, Response.ErrorListener, IRecyclerItemClickListener {
+public class FragmentNews extends Fragment implements Response.Listener, Response.ErrorListener, IRecyclerItemClickListener{
 
     private RecyclerView recyclerView;
 
@@ -128,7 +128,6 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
             this.clickListener = clickListener;
         }
     }
-
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
