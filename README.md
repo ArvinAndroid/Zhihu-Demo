@@ -1,1 +1,1 @@
-This is a MasterDesign based app.
+自己练习的一个知乎日报的小demo。API来源：[知乎日报API分析](https://github.com/izzyleung/ZhihuDailyPurify/wiki/知乎日报-API-分析)
