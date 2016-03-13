@@ -30,6 +30,7 @@ jacoco.exec
 
 # Log Files
 *.log
+ant
 
 # Android Studio Navigation editor temp files
 .navigation/

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,14 +37,22 @@ import java.util.List;
 /**
  * Created by jun on 2/24/16.
  */
-public class FragmentNews extends Fragment implements Response.Listener, Response.ErrorListener, IRecyclerItemClickListener{
+public class FragmentNews extends Fragment implements Response.Listener, Response.ErrorListener, IRecyclerItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout refreshLayout;
+
+    private ContentAdapter adapter = null;
+    private List<Story> stories = null;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
+
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+        refreshLayout.setOnRefreshListener(this);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -55,19 +64,29 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(), "加载失败", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "request failed", Toast.LENGTH_LONG).show();
+        dismisRefreshLayout();
     }
 
     @Override
     public void onResponse(Object response) {
         try {
-            LatestNews latestNews = JSON.parseObject(response.toString(), LatestNews.class);
-            List<Story> stories = new ArrayList<>();
-            for (Story story : latestNews.getStories()) {
-                stories.add(story);
+            if (refreshLayout.isRefreshing()) {
+                Toast.makeText(getContext(), "refresh success", Toast.LENGTH_LONG).show();
+                dismisRefreshLayout();
             }
-            ContentAdapter adapter = new ContentAdapter(stories);
-            adapter.setOnItemClickListener(this);
+            LatestNews latestNews = JSON.parseObject(response.toString(), LatestNews.class);
+            List<Story> tempStorys = new ArrayList<>();
+            for (Story story : latestNews.getStories()) {
+                tempStorys.add(story);
+            }
+            stories = tempStorys;
+            if (adapter == null) {
+                adapter = new ContentAdapter();
+                adapter.setOnItemClickListener(this);
+            } else {
+                adapter.notifyDataSetChanged();
+            }
             recyclerView.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -78,18 +97,22 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
     public void onItemClick(View v, Object o) {
         Story story = (Story) o;
         Intent intent = new Intent(getContext(), NewsDetailActivity.class);
-        intent.putExtra("detail_url",Constant.DETAILNEWS_URL + story.getId());
+        intent.putExtra("detail_url", Constant.DETAILNEWS_URL + story.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Constant.LATESNEWS_URL, this, this);
+        Application.getInstance().getRequestQueue().add(request);
     }
 
     class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-        private List<Story> items;
         private Context context;
         private IRecyclerItemClickListener clickListener;
 
-        public ContentAdapter(List<Story> stories) {
-            this.items = stories != null ? stories : new ArrayList<Story>();
+        public ContentAdapter() {
         }
 
         @Override
@@ -101,7 +124,7 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
-            Story story = items.get(position);
+            Story story = stories.get(position);
             holder.title.setText(story.getTitle());
             String imgUrl = story.getImages();
             Glide.with(context)
@@ -113,7 +136,7 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
                 @Override
                 public void onClick(View v) {
                     if (clickListener != null) {
-                        clickListener.onItemClick(holder.v, items.get(position));
+                        clickListener.onItemClick(holder.v, stories.get(position));
                     }
                 }
             });
@@ -121,7 +144,7 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
 
         @Override
         public int getItemCount() {
-            return items != null ? items.size() : 0;
+            return stories != null ? stories.size() : 0;
         }
 
         public void setOnItemClickListener(IRecyclerItemClickListener clickListener) {
@@ -143,4 +166,9 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
         }
     }
 
+    private void dismisRefreshLayout(){
+        if(refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
+        }
+    }
 }
