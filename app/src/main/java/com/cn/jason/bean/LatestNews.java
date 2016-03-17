@@ -1,4 +1,4 @@
-package com.cn.materiadesign.bean;
+package com.cn.jason.bean;
 
 import java.util.ArrayList;
 import java.util.List;

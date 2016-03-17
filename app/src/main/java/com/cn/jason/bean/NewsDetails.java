@@ -1,4 +1,4 @@
-package com.cn.materiadesign.bean;
+package com.cn.jason.bean;
 
 /**
  * Created by jun on 3/6/16.

@@ -1,4 +1,4 @@
-package com.cn.materiadesign.fragment;
+package com.cn.jason.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +21,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
-import com.cn.materiadesign.Application;
-import com.cn.materiadesign.Constant;
-import com.cn.materiadesign.R;
-import com.cn.materiadesign.activity.NewsDetailActivity;
-import com.cn.materiadesign.bean.LatestNews;
-import com.cn.materiadesign.bean.Story;
-import com.cn.materiadesign.interfa.IRecyclerItemClickListener;
+import com.cn.jason.Application;
+import com.cn.jason.Constant;
+import com.cn.jason.R;
+import com.cn.jason.activity.NewsDetailActivity;
+import com.cn.jason.bean.LatestNews;
+import com.cn.jason.bean.Story;
+import com.cn.jason.interfa.IRecyclerItemClickListener;
+import com.cn.jason.widgets.MyRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ import java.util.List;
  */
 public class FragmentNews extends Fragment implements Response.Listener, Response.ErrorListener, IRecyclerItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private RecyclerView recyclerView;
+    private MyRecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
 
     private ContentAdapter adapter = null;
@@ -53,10 +52,8 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
         refreshLayout.setOnRefreshListener(this);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView = (MyRecyclerView) view.findViewById(R.id.recycler);
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Constant.LATESNEWS_URL, this, this);
         Application.getInstance().getRequestQueue().add(request);
         return view;
@@ -84,10 +81,10 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
             if (adapter == null) {
                 adapter = new ContentAdapter();
                 adapter.setOnItemClickListener(this);
+                recyclerView.setAdapter(adapter);
             } else {
                 adapter.notifyDataSetChanged();
             }
-            recyclerView.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -166,8 +163,8 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
         }
     }
 
-    private void dismisRefreshLayout(){
-        if(refreshLayout.isRefreshing()){
+    private void dismisRefreshLayout() {
+        if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
     }

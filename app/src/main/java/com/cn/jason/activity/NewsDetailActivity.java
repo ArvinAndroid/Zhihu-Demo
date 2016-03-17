@@ -1,4 +1,4 @@
-package com.cn.materiadesign.activity;
+package com.cn.jason.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,9 +14,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
-import com.cn.materiadesign.Application;
-import com.cn.materiadesign.R;
-import com.cn.materiadesign.bean.NewsDetails;
+import com.cn.jason.Application;
+import com.cn.jason.R;
+import com.cn.jason.bean.NewsDetails;
 
 /**
  * Created by jun on 3/4/16.

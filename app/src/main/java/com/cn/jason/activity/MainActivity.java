@@ -1,4 +1,4 @@
-package com.cn.materiadesign.activity;
+package com.cn.jason.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,12 +14,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
-import com.cn.materiadesign.R;
-import com.cn.materiadesign.fragment.FragmentNews;
-import com.cn.materiadesign.fragment.FragmentHotNews;
-import com.cn.materiadesign.fragment.Tab3Fragment;
+import com.cn.jason.R;
+import com.cn.jason.fragment.FragmentNews;
+import com.cn.jason.fragment.FragmentHotNews;
+import com.cn.jason.fragment.Tab3Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentNews(), "news");
         adapter.addFragment(new FragmentHotNews(), "hot");
-        adapter.addFragment(new Tab3Fragment(), "three");
+        adapter.addFragment(new Tab3Fragment(), "other");
         viewPager.setAdapter(adapter);
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
@@ -100,5 +101,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             titles.add(title);
         }
     }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
+
 
 }
