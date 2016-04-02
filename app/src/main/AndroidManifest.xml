@@ -12,7 +12,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.cn.zhihu.activitys.NewsDetailActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.cn.zhihu.activitys.MainActivity"
             android:label="@string/app_name"

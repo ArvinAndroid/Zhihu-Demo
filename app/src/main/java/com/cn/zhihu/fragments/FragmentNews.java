@@ -92,6 +92,7 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
         Intent intent = new Intent(getContext(), NewsDetailActivity.class);
         intent.putExtra("detail_url", Constant.DETAILNEWS_URL + "/" + story.getId());
         startActivity(intent);
+
     }
 
     @Override
