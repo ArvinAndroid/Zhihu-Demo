@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cn.jason">
+    package="com.cn.zhihu">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:name="com.cn.jason.Application"
+        android:name="com.cn.zhihu.Application"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.cn.jason.activity.NewsDetailActivity"
+            android:name="com.cn.zhihu.activitys.NewsDetailActivity"
             android:launchMode="singleInstance" />
         <activity
-            android:name="com.cn.jason.activity.MainActivity"
-            android:label="@string/main_name"
+            android:name="com.cn.zhihu.activitys.MainActivity"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.cn.jason.activity.SplashActivity"
+            android:name="com.cn.zhihu.activitys.SplashActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

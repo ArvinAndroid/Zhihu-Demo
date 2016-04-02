@@ -1,4 +1,4 @@
-package com.cn.jason.bean;
+package com.cn.zhihu.beans;
 
 import java.util.List;
 

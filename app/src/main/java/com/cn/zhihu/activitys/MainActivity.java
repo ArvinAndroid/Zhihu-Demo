@@ -1,4 +1,4 @@
-package com.cn.jason.activity;
+package com.cn.zhihu.activitys;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,18 +14,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 
-import com.cn.jason.R;
-import com.cn.jason.fragment.FragmentNews;
-import com.cn.jason.fragment.FragmentHotNews;
-import com.cn.jason.fragment.Tab3Fragment;
+import com.cn.zhihu.R;
+import com.cn.zhihu.fragments.FragmentHotNews;
+import com.cn.zhihu.fragments.FragmentNews;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -36,25 +34,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
+        navigationView.setNavigationItemSelectedListener(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pageer);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_page);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentNews(), "news");
         adapter.addFragment(new FragmentHotNews(), "hot");
-        adapter.addFragment(new Tab3Fragment(), "other");
         viewPager.setAdapter(adapter);
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
@@ -69,6 +58,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_setting:
+                break;
+            case R.id.menu_about:
+                break;
+            default:
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+                break;
+        }
+        return false;
     }
 
 
@@ -101,17 +105,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             titles.add(title);
         }
     }
-
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        return super.dispatchTouchEvent(ev);
-    }
-
 
 }

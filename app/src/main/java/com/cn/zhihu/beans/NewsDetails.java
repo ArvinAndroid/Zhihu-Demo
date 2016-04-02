@@ -1,4 +1,6 @@
-package com.cn.jason.bean;
+package com.cn.zhihu.beans;
+
+import java.util.List;
 
 /**
  * Created by jun on 3/6/16.
@@ -13,6 +15,7 @@ public class NewsDetails {
     private int type;
     private String ga_prefix;
 
+    private List<String> css;
 
     public String getId() {
         return id;
@@ -76,5 +79,13 @@ public class NewsDetails {
 
     public void setGa_prefix(String ga_prefix) {
         this.ga_prefix = ga_prefix;
+    }
+
+    public List<String> getCss() {
+        return css;
+    }
+
+    public void setCss(List<String> css) {
+        this.css = css;
     }
 }

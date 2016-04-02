@@ -1,4 +1,4 @@
-package com.cn.jason.activity;
+package com.cn.zhihu.activitys;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,9 +12,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
-import com.cn.jason.Application;
-import com.cn.jason.Constant;
-import com.cn.jason.R;
+import com.cn.zhihu.Application;
+import com.cn.zhihu.Constant;
+import com.cn.zhihu.R;
 
 import org.json.JSONObject;
 
@@ -47,8 +47,6 @@ public class SplashActivity extends Activity implements Response.Listener, Respo
             title.setText(text);
             Glide.with(this)
                     .load(imgUrl)
-                    .placeholder(R.mipmap.avatar)
-                    .error(R.mipmap.avatar)
                     .into(img);
             startActivity();
         } catch (Exception e) {

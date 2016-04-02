@@ -1,4 +1,4 @@
-package com.cn.jason.widgets;
+package com.cn.zhihu.widgets;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;

@@ -1,4 +1,4 @@
-package com.cn.jason;
+package com.cn.zhihu;
 
 import android.graphics.Bitmap;
 import android.util.LruCache;

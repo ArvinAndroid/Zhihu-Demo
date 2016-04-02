@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Zhihu-Demo</string>
     <string name="action_settings">Settings</string>
-    <string name="main_name">知乎新闻列表Demo</string>
-    <string name="about">Jason Chen-Android Developer</string>
+    <string name="about">每天进步一点点</string>
 </resources>

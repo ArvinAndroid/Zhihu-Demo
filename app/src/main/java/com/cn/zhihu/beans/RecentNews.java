@@ -1,4 +1,4 @@
-package com.cn.jason.bean;
+package com.cn.zhihu.beans;
 
 /**
  * Created by jun on 3/13/16.

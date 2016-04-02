@@ -1,9 +1,8 @@
-package com.cn.jason.activity;
+package com.cn.zhihu.activitys;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,9 +13,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
-import com.cn.jason.Application;
-import com.cn.jason.R;
-import com.cn.jason.bean.NewsDetails;
+import com.cn.zhihu.Application;
+import com.cn.zhihu.R;
+import com.cn.zhihu.beans.NewsDetails;
 
 /**
  * Created by jun on 3/4/16.
@@ -24,20 +23,17 @@ import com.cn.jason.bean.NewsDetails;
 public class NewsDetailActivity extends Activity implements Response.Listener, Response.ErrorListener {
 
     private WebView webView;
-    private TextView title, imageSource;
+    private TextView imageSource;
     private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_news);
-        title = (TextView) findViewById(R.id.detail_title);
         image = (ImageView) findViewById(R.id.img_details);
         imageSource = (TextView) findViewById(R.id.image_source);
         webView = (WebView) findViewById(R.id.webview);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setBuiltInZoomControls(false);
-        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
         String detailUrl = getIntent().getStringExtra("detail_url");
         if (detailUrl == null) {
             return;
@@ -54,9 +50,17 @@ public class NewsDetailActivity extends Activity implements Response.Listener, R
     @Override
     public void onResponse(Object response) {
         NewsDetails details = JSON.parseObject(response.toString(), NewsDetails.class);
-        webView.loadData(details.getBody(), "text/html;charset=UTF-8", null);
-        title.setText(details.getTitle());
-        imageSource.setText("图片来源：" + details.getImage_source());
-        Glide.with(this).load(details.getImage()).placeholder(R.mipmap.avatar).into(image);
+        StringBuilder html = new StringBuilder();
+        html.append("<html>");
+        html.append("<head>");
+        html.append("</head>");
+        html.append("<body>");
+        html.append(details.getBody());
+        html.append("</body>");
+        html.append("</html>");
+
+        webView.loadDataWithBaseURL("", html.toString(), "text/html;charset=UTF-8", "", "");
+        Glide.with(this).load(details.getImage()).into(image);
+        imageSource.setText("Image Form: " + details.getImage_source());
     }
 }

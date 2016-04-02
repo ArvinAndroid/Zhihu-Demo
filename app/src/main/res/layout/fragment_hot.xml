@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.cn.jason.widgets.MyRecyclerView
+    <com.cn.zhihu.widgets.MyRecyclerView
         android:id="@+id/recycler_hot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
