@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
@@ -56,7 +56,7 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(), "request failed", Toast.LENGTH_LONG).show();
+        Snackbar.make(recyclerView,"request failed",Snackbar.LENGTH_INDEFINITE).show();
         dismisRefreshLayout();
     }
 
@@ -64,21 +64,21 @@ public class FragmentNews extends Fragment implements Response.Listener, Respons
     public void onResponse(Object response) {
         try {
             if (refreshLayout.isRefreshing()) {
-                Toast.makeText(getContext(), "refresh success", Toast.LENGTH_LONG).show();
+                Snackbar.make(recyclerView,"refresh success",Snackbar.LENGTH_SHORT).show();
                 dismisRefreshLayout();
             }
             LatestNews latestNews = JSON.parseObject(response.toString(), LatestNews.class);
-            List<Story> tempStorys = new ArrayList<>();
+            List<Story> tempStories = new ArrayList<>();
             for (Story story : latestNews.getStories()) {
-                tempStorys.add(story);
+                tempStories.add(story);
             }
             if (adapter == null) {
                 adapter = new ContentAdapter();
                 adapter.setOnItemClickListener(this);
-                adapter.refreshData(tempStorys);
+                adapter.refreshData(tempStories);
                 recyclerView.setAdapter(adapter);
             } else {
-                adapter.refreshData(tempStorys);
+                adapter.refreshData(tempStories);
                 adapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {
